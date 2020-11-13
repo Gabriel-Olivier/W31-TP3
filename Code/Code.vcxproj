@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="ConsoleColor.h" />
     <ClInclude Include="ConsoleMenu.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Couleur.h" />
     <ClInclude Include="Combinaison.h" />
     <ClInclude Include="EmptyListException.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="ListeBase.h" />
     <ClInclude Include="ListeDouble.h" />
     <ClInclude Include="Mastermind.h" />
+    <ClInclude Include="Noeud.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
