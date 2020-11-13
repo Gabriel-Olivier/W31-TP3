@@ -16,13 +16,18 @@ public:
 	Noeud<T>* getPremierNoeud();
 	Iterateur<T> begin();
 	Iterateur<T> end();
+	int getNbElements() const;
+	bool isEmpty() const;
+	void vider();
 	
 private:
 	void pushFront(T* _element);
 	bool deleteFront();
 	bool deleteAt(Noeud<T>* _node);
 	bool pushAt(Noeud<T>* _node, T* _element);
+	void vider();
 	Noeud<T>* premierNoeud;
+	int nbElements;
 };
 
 template<class T>
