@@ -10,13 +10,13 @@ public:
 	Iterateur(Noeud<T>* courant);
 	~Iterateur();
 
-	void operator++();
-	void operator--();
-	T* operator->();
-	T& operator*();
-	bool operator==(Iterateur<T> iter);
-	bool operator!=(Iterateur<T> iter);
-	T* getCourant();
+	void operator++() override;
+	void operator--() override;
+	T* operator->() override;
+	T& operator*() override;
+	bool operator==(Iterateur<T> iter) override;
+	bool operator!=(Iterateur<T> iter) override;
+	T* getCourant() override;
 
 private:
 	Noeud<T>* courant;
