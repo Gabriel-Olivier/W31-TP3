@@ -1,6 +1,5 @@
 #pragma once
 #include "IterateurBase.h"
-#include "ListeDouble.h"
 
 template <class T>
 class Iterateur : public IterateurBase<T>
@@ -10,13 +9,14 @@ public:
 	Iterateur(Noeud<T>* courant);
 	~Iterateur();
 
-	void operator++();
-	void operator--();
-	T* operator->();
-	T& operator*();
+	void operator++() override;
+	void operator--() override;
+	T* operator->() override;
+	T& operator*() override;
+	Noeud<T>* getCourant() override;
+
 	bool operator==(Iterateur<T> iter);
 	bool operator!=(Iterateur<T> iter);
-	T* getCourant();
 
 private:
 	Noeud<T>* courant;
@@ -75,7 +75,7 @@ bool Iterateur<T>::operator!=(Iterateur<T> iter)
 }
 
 template<class T>
-T* Iterateur<T>::getCourant()
+Noeud<T>* Iterateur<T>::getCourant()
 {
 	return this->courant;
 }

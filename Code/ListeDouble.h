@@ -10,22 +10,24 @@ class ListeDouble : public ListeBase<T>
 public:
 	ListeDouble();
 	~ListeDouble();
+
 	bool ajouter(T* _element) override;
-	bool retirer(Noeud<T>* _element);
+	int getNbElements() const override;
+	bool isEmpty() const override;
+	void vider() override;
+
+	bool retirer(Noeud<T>* _noeudCourant);
 	void affiche();
 	Noeud<T>* getPremierNoeud();
 	Iterateur<T> begin();
 	Iterateur<T> end();
-	int getNbElements() const;
-	bool isEmpty() const;
-	void vider();
 	
 private:
 	void pushFront(T* _element);
 	bool deleteFront();
 	bool deleteAt(Noeud<T>* _node);
 	bool pushAt(Noeud<T>* _node, T* _element);
-	void vider();
+	void retirer();
 	Noeud<T>* premierNoeud;
 	int nbElements;
 };
@@ -69,7 +71,7 @@ bool ListeDouble<T>::ajouter(T* _element)
 }
 
 template<class T>
-bool ListeDouble<T>::retirer(Noeud<T>* _element)
+bool ListeDouble<T>::retirer(Noeud<T>* _noeudCourant)
 {
 	if (!this->premierNoeud)
 		return false;

@@ -6,6 +6,7 @@ class Noeud
 public:
 	Noeud();
 	~Noeud();
+
 	Noeud<T>* getSuivant();
 	void setSuivant(Noeud<T>* _suivant);
 	Noeud<T>* getPrecedent();

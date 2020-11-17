@@ -1,5 +1,4 @@
 #pragma once
-#include "IterateurBase.h"
 
 template <class T>
 class ListeBase
