@@ -37,6 +37,7 @@ ListeDouble<T>::ListeDouble()
 {
 	// Indicateur de liste vide
 	this->premierNoeud = nullptr;
+	this->nbElements = 0;
 }
 
 template<class T>
@@ -60,7 +61,8 @@ bool ListeDouble<T>::ajouter(T* _element)
 		Iterateur<T> current = this->begin();
 		while (current != this->end() && *_element > *current)
 			current.operator++();
-		isPushed = this->pushAt(current.getCourant(), _element);
+		if (current != this->end())
+			isPushed = this->pushAt(current.getCourant(), _element);
 	}
 
 	if (isPushed) this->nbElements++;
@@ -82,20 +84,27 @@ bool ListeDouble<T>::isEmpty() const
 template<class T>
 void ListeDouble<T>::vider()
 {
+	while (this->premierNoeud)
+		this->retirer(this->premierNoeud);
 }
 
 template<class T>
 bool ListeDouble<T>::retirer(Noeud<T>* _noeudCourant)
 {
-	if (!this->premierNoeud)
-		return false;
-	if (this->premierNoeud && *this->premierNoeud->getElement() == *_noeudCourant->getElement())
-		return this->deleteFront();
-	Iterateur<T> current = this->begin();
-	while (current != this->end() && *_noeudCourant->getElement() != *current.getCourant()->getSuivant()->getElement())
-		current.operator++();
-	bool isRemoved = this->deleteAt(current.getCourant());
-	if (isRemoved) nbElements--;
+	bool isRemoved = false;
+	if (this->premierNoeud)
+	{
+		if (*this->premierNoeud->getElement() == *_noeudCourant->getElement())
+			isRemoved = this->deleteFront();
+		else
+		{
+			Iterateur<T> current = this->begin();
+			while (current != this->end() && *_noeudCourant->getElement() != *current.getCourant()->getSuivant()->getElement())
+				current.operator++();
+			isRemoved = this->deleteAt(current.getCourant());
+		}
+	}
+	if (isRemoved) this->nbElements--;
 	return isRemoved;
 }
 
@@ -159,14 +168,17 @@ template<class T>
 bool ListeDouble<T>::pushAt(Noeud<T>* _node, T* _livre)
 {
 	bool isPushed = false;
-	Noeud<T>* oldNextNode = _node->getSuivant();
-	if (!oldNextNode || *_livre < *oldNextNode->getElement())
+	if (_node != nullptr)
 	{
-		Noeud<T>* newNode = new Noeud<T>;
-		newNode->setElement(_livre);
-		_node->setSuivant(newNode);
-		newNode->setSuivant(oldNextNode);
-		isPushed = true;
+		Noeud<T>* oldNextNode = _node->getSuivant();
+		if (!oldNextNode || *_livre < *oldNextNode->getElement())
+		{
+			Noeud<T>* newNode = new Noeud<T>;
+			newNode->setElement(_livre);
+			_node->setSuivant(newNode);
+			newNode->setSuivant(oldNextNode);
+			isPushed = true;
+		}
 	}
 	return isPushed;
 }

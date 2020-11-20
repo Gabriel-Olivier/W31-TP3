@@ -1,4 +1,5 @@
 #pragma once
+#include "Constants.h"
 #include "Couleur.h"
 
 class Combinaison
@@ -16,6 +17,5 @@ public:
     
 private:
 	int convertToNumeric() const;
-	static const unsigned int NB_COULEURS = 4;
-	Couleur tabCouleurs[NB_COULEURS];
+	Couleur tabCouleurs[NB_COULEURS_COMBINAISON];
 };
