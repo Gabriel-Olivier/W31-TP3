@@ -59,22 +59,24 @@ bool ListeDouble<T>::ajouter(T* _element)
 	{
 		Iterateur<T> current = this->begin();
 		while (current != this->end() && *_element > *current)
-			current++;
-		isPushed = this->pushAt(current->getCourant(), _element);
+			current.operator++();
+		isPushed = this->pushAt(current.getCourant(), _element);
 	}
+
+	if (isPushed) this->nbElements++;
 	return isPushed;
 }
 
 template<class T>
 int ListeDouble<T>::getNbElements() const
 {
-	return 0;
+	return this->nbElements;
 }
 
 template<class T>
 bool ListeDouble<T>::isEmpty() const
 {
-	return false;
+	return this->premierNoeud == nullptr;
 }
 
 template<class T>
@@ -90,9 +92,11 @@ bool ListeDouble<T>::retirer(Noeud<T>* _noeudCourant)
 	if (this->premierNoeud && *this->premierNoeud->getElement() == *_noeudCourant->getElement())
 		return this->deleteFront();
 	Iterateur<T> current = this->begin();
-	while (current != this->end() && *_noeudCourant->getElement() != *current->getCourant()->getSuivant()->getElement())
-		current++;
-	return this->deleteAt(current->getCourant());
+	while (current != this->end() && *_noeudCourant->getElement() != *current.getCourant()->getSuivant()->getElement())
+		current.operator++();
+	bool isRemoved = this->deleteAt(current.getCourant());
+	if (isRemoved) nbElements--;
+	return isRemoved;
 }
 
 template<class T>
