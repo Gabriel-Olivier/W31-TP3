@@ -1,43 +1,44 @@
 #include "Couleur.h"
 
-
 Couleur::Couleur(void)
 {
-    couleur = 0;
+    this->couleur = 0;
 }
+
 Couleur::Couleur(short _c)
 {
-    couleur = _c;
+    this->couleur = _c;
 }
-Couleur::~Couleur(void){}
+
+Couleur::~Couleur(void) {}
 
 ostream& operator<<(ostream& sortie, const Couleur& c)
 {
-    
-    switch(c.couleur){
+    switch(c.couleur)
+    {
         case 1:
-            sortie<<"Rouge";
-            break;
+            sortie << "Rouge";
+            break; 
         case 2:
-            sortie<<"Vert";
-            break;
+            sortie << "Vert";
+            break; 
         case 3:
-            sortie<<"Bleu";
-            break;
+            sortie << "Bleu";
+            break; 
         case 4:
-            sortie<<"Jaune";
-            break;
+            sortie << "Jaune";
+            break; 
         case 5:
-            sortie<<"Noir";
-            break;
+            sortie << "Noir";
+            break; 
         case 6:
-            sortie<<"Orange";
-            break;
+            sortie << "Orange";
+            break; 
         case 7:
-            sortie<<"Mauve";
-            break;
+            sortie << "Mauve";
+            break; 
         case 8:
-            sortie<<"Blanc";
+            sortie << "Blanc";
             break;
     };
     return sortie;
@@ -45,31 +46,37 @@ ostream& operator<<(ostream& sortie, const Couleur& c)
 
 bool Couleur::operator==(const Couleur& c)
 { 
-    return couleur == c.couleur;
+    return this->couleur == c.couleur;
 }
 
-bool Couleur::operator>(const Couleur& c){ 
-    return couleur > c.couleur;
+bool Couleur::operator>(const Couleur& c)
+{ 
+    return this->couleur > c.couleur;
 }
 
-bool Couleur::operator<(const Couleur& c){ 
-    return couleur < c.couleur;
+bool Couleur::operator<(const Couleur& c)
+{ 
+    return this->couleur < c.couleur;
 }
 
-bool Couleur::operator!=(const Couleur& c){ 
-    return couleur != c.couleur;
+bool Couleur::operator!=(const Couleur& c)
+{ 
+    return this->couleur != c.couleur;
 }
 
-void Couleur::operator=(const Couleur& c){ 
-    couleur = c.couleur;
+void Couleur::operator=(const Couleur& c)
+{ 
+    this->couleur = c.couleur;
 }
 
-short Couleur::convertToNumeric(){
-    return couleur;
+short Couleur::convertToNumeric()
+{
+    return this->couleur;
 }
 
-void Couleur::setCouleur(short _c){
-    couleur = _c;
+void Couleur::setCouleur(short _c)
+{
+    this->couleur = _c;
 }
 
 short Couleur::getCouleur()

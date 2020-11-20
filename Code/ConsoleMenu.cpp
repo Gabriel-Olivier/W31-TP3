@@ -1,4 +1,5 @@
-﻿#include "ConsoleMenu.h"
+﻿#include <ctime>
+#include "ConsoleMenu.h"
 #include "ConsoleColor.h"
 #include "Mastermind.h"
 #include "ListeDouble.h"
@@ -9,7 +10,6 @@ ConsoleMenu::ConsoleMenu()
 {
 
 }
-
 
 ConsoleMenu::~ConsoleMenu()
 {
@@ -47,8 +47,7 @@ void ConsoleMenu::run()
                     break;
                 }
                 nbCoups++;
-
-
+                
                 cout << "NbElements:" << iNbElements << endl;
 
                 //Obtention de la combinaison de couleur de référence
@@ -62,8 +61,7 @@ void ConsoleMenu::run()
                     << tabCouleurs[3] << " "
                     << "--------"
                     << endl;
-
-
+                
                 cout << blue << endl << "Choix de HAL (" << "essai #" << nbCoups << "):    " << tabCouleursRef->getCouleur(0) << " "
                     << tabCouleursRef->getCouleur(1) << " "
                     << tabCouleursRef->getCouleur(2) << " "
@@ -175,5 +173,4 @@ void ConsoleMenu::afficherResultat(short nbCoups)
         cout << " essais. Merci d'avoir joue avec moi." << endl << endl;
     }
     cout << "----HAL 9000----" << endl << endl;
-        
 }

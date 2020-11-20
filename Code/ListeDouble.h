@@ -17,11 +17,11 @@ public:
 	void vider() override;
 
 	bool retirer(Noeud<T>* _noeudCourant);
-	void affiche();
 	Noeud<T>* getPremierNoeud();
+
 	Iterateur<T> begin();
 	Iterateur<T> end();
-	
+
 private:
 	void pushFront(T* _element);
 	bool deleteFront();
@@ -42,12 +42,7 @@ ListeDouble<T>::ListeDouble()
 template<class T>
 ListeDouble<T>::~ListeDouble()
 {
-	while (this->premierNoeud)
-	{
-		Noeud<T>* oldFirstNode = this->premierNoeud;
-		this->premierNoeud = this->premierNoeud->getSuivant();
-		delete oldFirstNode;
-	}
+	this->retirer();
 }
 
 template<class T>
@@ -62,12 +57,29 @@ bool ListeDouble<T>::ajouter(T* _element)
 	}
 	else if (*_element != *firstElement)
 	{
-		Noeud<T>* current = this->premierNoeud;
-		while (current->getSuivant() && *_element > * current->getSuivant()->getElement())
-			current = current->getSuivant();
-		isPushed = this->pushAt(current, _element);
+		Iterateur<T> current = this->begin();
+		while (current != this->end() && *_element > *current)
+			current++;
+		isPushed = this->pushAt(current->getCourant(), _element);
 	}
 	return isPushed;
+}
+
+template<class T>
+int ListeDouble<T>::getNbElements() const
+{
+	return 0;
+}
+
+template<class T>
+bool ListeDouble<T>::isEmpty() const
+{
+	return false;
+}
+
+template<class T>
+void ListeDouble<T>::vider()
+{
 }
 
 template<class T>
@@ -75,23 +87,12 @@ bool ListeDouble<T>::retirer(Noeud<T>* _noeudCourant)
 {
 	if (!this->premierNoeud)
 		return false;
-	if (this->premierNoeud && *this->premierNoeud->getElement() == *_element->getElement())
+	if (this->premierNoeud && *this->premierNoeud->getElement() == *_noeudCourant->getElement())
 		return this->deleteFront();
-	Noeud<T>* current = this->premierNoeud;
-	while (current->getSuivant() && *_element->getElement() != *current->getSuivant()->getElement())
-		current = current->getSuivant();
-	return this->deleteAt(current);
-}
-
-template<class T>
-void ListeDouble<T>::affiche()
-{
-	Noeud<T>* current = this->premierNoeud;
-	while (current)
-	{
-		current->getElement()->affiche();
-		current = current->getSuivant();
-	}
+	Iterateur<T> current = this->begin();
+	while (current != this->end() && *_noeudCourant->getElement() != *current->getCourant()->getSuivant()->getElement())
+		current++;
+	return this->deleteAt(current->getCourant());
 }
 
 template<class T>
@@ -164,4 +165,15 @@ bool ListeDouble<T>::pushAt(Noeud<T>* _node, T* _livre)
 		isPushed = true;
 	}
 	return isPushed;
+}
+
+template<class T>
+void ListeDouble<T>::retirer()
+{
+	while (this->premierNoeud)
+	{
+		Noeud<T>* oldFirstNode = this->premierNoeud;
+		this->premierNoeud = this->premierNoeud->getSuivant();
+		delete oldFirstNode;
+	}
 }
