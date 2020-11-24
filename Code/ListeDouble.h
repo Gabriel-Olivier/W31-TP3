@@ -99,7 +99,7 @@ bool ListeDouble<T>::retirer(Noeud<T>* _noeudCourant)
 		else
 		{
 			Iterateur<T> current = this->begin();
-			while (current != this->end() && *_noeudCourant->getElement() != *current.getCourant()->getSuivant()->getElement() )
+			while (current != this->end() && *_noeudCourant->getElement() != *current.getCourant()->getSuivant()->getElement())
 				++current;
 			isRemoved = this->deleteAt(current);
 		}
