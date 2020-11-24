@@ -10,7 +10,7 @@ namespace Tests_Liste_Double
 {		
 	TEST_CLASS(Liste_Double)
 	{
-		// Tests de getPremierNoeud()
+		#pragma region Tests de getPremierNoeud()
 
 		TEST_METHOD(getPremierNoeud_whenListIsEmpty_shouldReturnNull)
 		{
@@ -31,7 +31,9 @@ namespace Tests_Liste_Double
 			delete combinaison1;
 		}
 
-		// Tests de getNbElements()
+		#pragma endregion
+
+		#pragma region Tests de getNbElements()
 
 		TEST_METHOD(getNbElements_whenListIsEmpty_shouldReturnZero)
 		{
@@ -40,7 +42,7 @@ namespace Tests_Liste_Double
 			Assert::AreEqual(0, liste.getNbElements());
 		}
 
-		TEST_METHOD(getNbElements_whenAnElementWasAdded_shouldIncrementNbElementsByOne)
+		TEST_METHOD(getNbElements_whenListContainsOneElement_shouldIncrementNbElementsByOne)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
@@ -54,7 +56,7 @@ namespace Tests_Liste_Double
 			delete combinaison1;
 		}
 
-		TEST_METHOD(getNbElements_whenListHasMultipleElements_shouldReturnNbElements)
+		TEST_METHOD(getNbElements_whenListContainsMultipleElements_shouldReturnNbElements)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaisons[NB_COULEURS];
@@ -70,7 +72,9 @@ namespace Tests_Liste_Double
 				delete combinaisons[i];
 		}
 
-		// Tests de isEmpty()
+		#pragma endregion
+		
+		#pragma region Tests de isEmpty()
 
 		TEST_METHOD(isEmpty_whenListIsEmpty_shouldReturnTrue)
 		{
@@ -91,7 +95,9 @@ namespace Tests_Liste_Double
 			delete combinaison1;
 		}
 
-		// Tests de vider()
+		#pragma endregion
+
+		#pragma region Tests de vider()
 
 		TEST_METHOD(vider_whenListIsEmpty_shouldDoNothing)
 		{
@@ -104,11 +110,10 @@ namespace Tests_Liste_Double
 			Assert::IsNull(liste.getPremierNoeud());
 		}
 
-		TEST_METHOD(vider_whenListHasOneElement_shouldEmptyTheList)
+		TEST_METHOD(vider_whenListContainsOneElement_shouldEmptyTheList)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaison = new Combinaison(Couleur(2), Couleur(1), Couleur(1), Couleur(1));
-
 			liste.ajouter(combinaison);
 
 			liste.vider();
@@ -120,7 +125,7 @@ namespace Tests_Liste_Double
 			delete combinaison;
 		}
 
-		TEST_METHOD(vider_whenListHasMultipleElements_shouldEmptyTheList)
+		TEST_METHOD(vider_whenListContainsMultipleElements_shouldEmptyTheList)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaisons[NB_COULEURS];
@@ -139,5 +144,69 @@ namespace Tests_Liste_Double
 			for (int i = 0; i < NB_COULEURS; i++)
 				delete combinaisons[i];
 		}
+
+		#pragma endregion
+
+		#pragma region Tests de ajouter()
+		
+		TEST_METHOD(ajouter_whenListIsEmpty_shouldAddTheElement)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+
+			liste.ajouter(combinaison);
+
+			Assert::IsTrue(combinaison == liste.getPremierNoeud()->getElement());
+			Assert::AreEqual(1, liste.getNbElements());
+			Assert::IsFalse(liste.isEmpty());
+
+			delete combinaison;
+		}
+
+		TEST_METHOD(ajouter_whenListContainsOneElement_shouldAddTheElementAtTheRightPlace)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison1 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			Combinaison* combinaison2 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			liste.ajouter(combinaison1);
+
+			liste.ajouter(combinaison2);
+
+			Assert::IsTrue(combinaison2 == liste.getPremierNoeud()->getElement());
+			Assert::AreEqual(2, liste.getNbElements());
+			Assert::IsFalse(liste.isEmpty());
+
+			delete combinaison1;
+			delete combinaison2;
+		}
+
+		TEST_METHOD(ajouter_whenListContainsMultipleElements_shouldAddTheElementAtTheRightPlace)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison1 = new Combinaison(Couleur(3), Couleur(3), Couleur(3), Couleur(3));
+			Combinaison* combinaison2 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			Combinaison* combinaison3 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			liste.ajouter(combinaison1);
+			liste.ajouter(combinaison2);
+
+			liste.ajouter(combinaison3);
+
+			Assert::AreEqual(3, liste.getNbElements());
+			Assert::IsFalse(liste.isEmpty());
+			Assert::IsTrue(combinaison2 == liste.getPremierNoeud()->getElement());
+			Iterateur<Combinaison> iterateur = liste.begin();
+			liste.retirer(iterateur.getCourant());
+			iterateur = liste.begin();
+			Assert::IsTrue(combinaison3 == liste.getPremierNoeud()->getElement());
+			liste.retirer(iterateur.getCourant());
+			iterateur = liste.begin();
+			Assert::IsTrue(combinaison1 == liste.getPremierNoeud()->getElement());
+
+			delete combinaison1;
+			delete combinaison2;
+			delete combinaison3;
+		}
+
+		#pragma endregion
 	};
 }
