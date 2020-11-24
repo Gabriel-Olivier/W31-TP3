@@ -22,6 +22,8 @@ public:
 	Iterateur<T> begin();
 	Iterateur<T> end();
 
+	void affiche();
+
 private:
 	void pushFront(T* _element);
 	bool deleteFront();
@@ -63,7 +65,6 @@ bool ListeDouble<T>::ajouter(T* _element)
 			++current;
 		isPushed = this->pushAt(current, _element);
 	}
-	std::cout << isPushed << std::endl;
 	if (isPushed) this->nbElements++;
 	return isPushed;
 }
@@ -133,6 +134,11 @@ void ListeDouble<T>::pushFront(T* _element)
 	newNode->setElement(_element);
 	this->premierNoeud = newNode;
 	newNode->setSuivant(oldFirstNode);
+	newNode->setPrecedent(nullptr);
+	if (oldFirstNode)
+	{
+		oldFirstNode->setPrecedent(newNode);
+	}
 }
 
 template<class T>
@@ -143,6 +149,7 @@ bool ListeDouble<T>::deleteFront()
 	{
 		Noeud<T>* oldFirstNode = this->premierNoeud;
 		this->premierNoeud = this->premierNoeud->getSuivant();
+		this->premierNoeud->setPrecedent(nullptr);
 		delete oldFirstNode;
 		isRemoved = true;
 	}
@@ -156,7 +163,9 @@ bool ListeDouble<T>::deleteAt(Iterateur<T>& it)
 	Noeud<T>* oldNextNode = it.getCourant()->getSuivant();
 	if (oldNextNode)
 	{
-		it.getCourant()->setSuivant(oldNextNode->getSuivant());
+		Noeud<T>* newNextNode = oldNextNode->getSuivant();
+		it.getCourant()->setSuivant(newNextNode);
+		newNextNode->setPrecedent(it.getCourant());
 		delete oldNextNode;
 		isRemoved = true;
 	}
@@ -164,16 +173,17 @@ bool ListeDouble<T>::deleteAt(Iterateur<T>& it)
 }
 
 template<class T>
-bool ListeDouble<T>::pushAt(Iterateur<T>& it, T* _livre)
+bool ListeDouble<T>::pushAt(Iterateur<T>& it, T* _element)
 {
 	bool isPushed = false;
 	Noeud<T>* oldNextNode = it.getCourant()->getSuivant();
-	if (!oldNextNode || *_livre < *oldNextNode->getElement())
+	if (!oldNextNode || *_element < *oldNextNode->getElement())
 	{
 		Noeud<T>* newNode = new Noeud<T>;
-		newNode->setElement(_livre);
+		newNode->setElement(_element);
 		it.getCourant()->setSuivant(newNode);
 		newNode->setSuivant(oldNextNode);
+		newNode->setPrecedent(it.getCourant());
 		isPushed = true;
 	}
 	return isPushed;
@@ -187,5 +197,16 @@ void ListeDouble<T>::retirer()
 		Noeud<T>* oldFirstNode = this->premierNoeud;
 		this->premierNoeud = this->premierNoeud->getSuivant();
 		delete oldFirstNode;
+	}
+}
+
+template<class T>
+void ListeDouble<T>::affiche()
+{
+	Iterateur<T> current = this->begin();
+	while (current != this->end())
+	{
+		std::cout << (*current).convertToNumeric() << std::endl;
+		++current;
 	}
 }
