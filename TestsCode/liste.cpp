@@ -193,18 +193,58 @@ namespace Tests_Liste_Double
 
 			Assert::AreEqual(3, liste.getNbElements());
 			Assert::IsFalse(liste.isEmpty());
-			Assert::IsTrue(combinaison2 == liste.getPremierNoeud()->getElement());
 			Iterateur<Combinaison> iterateur = liste.begin();
+			Assert::IsTrue(combinaison2 == iterateur.getCourant()->getElement());
 			liste.retirer(iterateur.getCourant());
 			iterateur = liste.begin();
-			Assert::IsTrue(combinaison3 == liste.getPremierNoeud()->getElement());
+			Assert::IsTrue(combinaison3 == iterateur.getCourant()->getElement());
 			liste.retirer(iterateur.getCourant());
 			iterateur = liste.begin();
-			Assert::IsTrue(combinaison1 == liste.getPremierNoeud()->getElement());
+			Assert::IsTrue(combinaison1 == iterateur.getCourant()->getElement());
 
 			delete combinaison1;
 			delete combinaison2;
 			delete combinaison3;
+		}
+
+		#pragma endregion
+
+		#pragma region Tests de retirer()
+
+		TEST_METHOD(retirer_whenListDoesNotContainTheNode_shouldReturnFalse)
+		{
+			ListeDouble<Combinaison> liste;
+			Noeud<Combinaison>* noeud = new Noeud<Combinaison>();
+			
+			Assert::IsFalse(liste.retirer(noeud));
+		}
+
+		TEST_METHOD(retirer_whenListContainsOneElement_shouldRemoveTheElement)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			liste.ajouter(combinaison);
+			
+			liste.retirer(liste.getPremierNoeud());
+
+			Assert::AreEqual(0, liste.getNbElements());
+			Assert::IsTrue(liste.isEmpty());
+			Assert::IsNull(liste.getPremierNoeud());
+		}
+
+		TEST_METHOD(retirer_whenListContainsMultipleElements_shouldRemoveTheRightElement)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison1 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			Combinaison* combinaison2 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			liste.ajouter(combinaison1);
+			liste.ajouter(combinaison2);
+
+			liste.retirer(liste.getPremierNoeud());
+
+			Assert::AreEqual(1, liste.getNbElements());
+			Assert::IsFalse(liste.isEmpty());
+			Assert::IsTrue(combinaison1 == liste.getPremierNoeud()->getElement());
 		}
 
 		#pragma endregion
