@@ -61,8 +61,17 @@ bool ListeDouble<T>::ajouter(T* _element)
 	else if (*_element != *firstElement)
 	{
 		Iterateur<T> current = this->begin();
-		while (current.getCourant()->getSuivant() != nullptr && *_element > *current)
-			++current;
+		while (*_element > *current)
+		{
+			if (current.getCourant()->getSuivant() != nullptr)
+			{
+				++current;
+			}
+			else
+			{
+				break;
+			}
+		}
 		isPushed = this->pushAt(current, _element);
 	}
 	if (isPushed) this->nbElements++;
@@ -176,12 +185,13 @@ template<class T>
 bool ListeDouble<T>::pushAt(Iterateur<T>& it, T* _element)
 {
 	bool isPushed = false;
-	Noeud<T>* oldNextNode = it.getCourant()->getSuivant();
+	Noeud<T>* currentNode = it.getCourant();
+	Noeud<T>* oldNextNode = currentNode->getSuivant();
 	if (!oldNextNode || *_element < *oldNextNode->getElement())
 	{
 		Noeud<T>* newNode = new Noeud<T>;
 		newNode->setElement(_element);
-		it.getCourant()->setSuivant(newNode);
+		currentNode->setSuivant(newNode);
 		newNode->setSuivant(oldNextNode);
 		newNode->setPrecedent(it.getCourant());
 		isPushed = true;
