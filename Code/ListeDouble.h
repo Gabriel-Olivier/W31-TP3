@@ -25,8 +25,8 @@ public:
 private:
 	void pushFront(T* _element);
 	bool deleteFront();
-	bool deleteAt(Noeud<T>* _node);
-	bool pushAt(Noeud<T>* _node, T* _element);
+	bool deleteAt(Iterateur<T>& _node);
+	bool pushAt(Iterateur<T>& it, T* _element);
 	void retirer();
 	Noeud<T>* premierNoeud;
 	int nbElements;
@@ -59,12 +59,11 @@ bool ListeDouble<T>::ajouter(T* _element)
 	else if (*_element != *firstElement)
 	{
 		Iterateur<T> current = this->begin();
-		while (current != this->end() && *_element > *current)
-			current.operator++();
-		if (current != this->end())
-			isPushed = this->pushAt(current.getCourant(), _element);
+		while (current.getCourant()->getSuivant() != nullptr && *_element > *current)
+			++current;
+		isPushed = this->pushAt(current, _element);
 	}
-
+	std::cout << isPushed << std::endl;
 	if (isPushed) this->nbElements++;
 	return isPushed;
 }
@@ -99,9 +98,9 @@ bool ListeDouble<T>::retirer(Noeud<T>* _noeudCourant)
 		else
 		{
 			Iterateur<T> current = this->begin();
-			while (current != this->end() && *_noeudCourant->getElement() != *current.getCourant()->getSuivant()->getElement())
-				current.operator++();
-			isRemoved = this->deleteAt(current.getCourant());
+			while (current != this->end() && *_noeudCourant->getElement() != *current.getCourant()->getSuivant()->getElement() )
+				++current;
+			isRemoved = this->deleteAt(current);
 		}
 	}
 	if (isRemoved) this->nbElements--;
@@ -151,13 +150,13 @@ bool ListeDouble<T>::deleteFront()
 }
 
 template<class T>
-bool ListeDouble<T>::deleteAt(Noeud<T>* _node)
+bool ListeDouble<T>::deleteAt(Iterateur<T>& it)
 {
 	bool isRemoved = false;
-	Noeud<T>* oldNextNode = _node->getSuivant();
+	Noeud<T>* oldNextNode = it.getCourant()->getSuivant();
 	if (oldNextNode)
 	{
-		_node->setSuivant(oldNextNode->getSuivant());
+		it.getCourant()->setSuivant(oldNextNode->getSuivant());
 		delete oldNextNode;
 		isRemoved = true;
 	}
@@ -165,20 +164,17 @@ bool ListeDouble<T>::deleteAt(Noeud<T>* _node)
 }
 
 template<class T>
-bool ListeDouble<T>::pushAt(Noeud<T>* _node, T* _livre)
+bool ListeDouble<T>::pushAt(Iterateur<T>& it, T* _livre)
 {
 	bool isPushed = false;
-	if (_node != nullptr)
+	Noeud<T>* oldNextNode = it.getCourant()->getSuivant();
+	if (!oldNextNode || *_livre < *oldNextNode->getElement())
 	{
-		Noeud<T>* oldNextNode = _node->getSuivant();
-		if (!oldNextNode || *_livre < *oldNextNode->getElement())
-		{
-			Noeud<T>* newNode = new Noeud<T>;
-			newNode->setElement(_livre);
-			_node->setSuivant(newNode);
-			newNode->setSuivant(oldNextNode);
-			isPushed = true;
-		}
+		Noeud<T>* newNode = new Noeud<T>;
+		newNode->setElement(_livre);
+		it.getCourant()->setSuivant(newNode);
+		newNode->setSuivant(oldNextNode);
+		isPushed = true;
 	}
 	return isPushed;
 }

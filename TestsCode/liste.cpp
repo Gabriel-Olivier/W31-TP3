@@ -54,6 +54,22 @@ namespace Tests_Liste_Double
 			delete combinaison1;
 		}
 
+		TEST_METHOD(getNbElements_whenListHasMultipleElements_shouldReturnNbElements)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaisons[NB_COULEURS];
+			for (int i = 1; i <= NB_COULEURS; i++)
+			{
+				combinaisons[i - 1] = new Combinaison(Couleur(i), Couleur(i), Couleur(i), Couleur(i));
+				liste.ajouter(combinaisons[i - 1]);
+			}
+
+			Assert::AreEqual((unsigned)NB_COULEURS, (unsigned)liste.getNbElements());
+
+			for (int i = 0; i < NB_COULEURS; i++)
+				delete combinaisons[i];
+		}
+
 		// Tests de isEmpty()
 
 		TEST_METHOD(isEmpty_whenListIsEmpty_shouldReturnTrue)
@@ -77,7 +93,34 @@ namespace Tests_Liste_Double
 
 		// Tests de vider()
 
-		TEST_METHOD(vider_whenListIsNotEmpty_shouldEmptyTheList)
+		TEST_METHOD(vider_whenListIsEmpty_shouldDoNothing)
+		{
+			ListeDouble<Combinaison> liste;
+
+			liste.vider();
+			
+			Assert::AreEqual(0, liste.getNbElements());
+			Assert::IsTrue(liste.isEmpty());
+			Assert::IsNull(liste.getPremierNoeud());
+		}
+
+		TEST_METHOD(vider_whenListHasOneElement_shouldEmptyTheList)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(2), Couleur(1), Couleur(1), Couleur(1));
+
+			liste.ajouter(combinaison);
+
+			liste.vider();
+
+			Assert::AreEqual(0, liste.getNbElements());
+			Assert::IsTrue(liste.isEmpty());
+			Assert::IsNull(liste.getPremierNoeud());
+
+			delete combinaison;
+		}
+
+		TEST_METHOD(vider_whenListHasMultipleElements_shouldEmptyTheList)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaisons[NB_COULEURS];
