@@ -183,28 +183,93 @@ namespace Tests_Liste_Double
 		TEST_METHOD(ajouter_whenListContainsMultipleElements_shouldAddTheElementAtTheRightPlace)
 		{
 			ListeDouble<Combinaison> liste;
-			Combinaison* combinaison1 = new Combinaison(Couleur(3), Couleur(3), Couleur(3), Couleur(3));
-			Combinaison* combinaison2 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
-			Combinaison* combinaison3 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			Combinaison* combinaison2 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			Combinaison* combinaison3 = new Combinaison(Couleur(3), Couleur(3), Couleur(3), Couleur(3));
+			liste.ajouter(combinaison3);
 			liste.ajouter(combinaison1);
 			liste.ajouter(combinaison2);
 
-			liste.ajouter(combinaison3);
-
 			Assert::AreEqual(3, liste.getNbElements());
 			Assert::IsFalse(liste.isEmpty());
-			Iterateur<Combinaison> iterateur = liste.begin();
-			Assert::IsTrue(combinaison2 == iterateur.getCourant()->getElement());
-			liste.retirer(iterateur.getCourant());
-			iterateur = liste.begin();
-			Assert::IsTrue(combinaison3 == iterateur.getCourant()->getElement());
-			liste.retirer(iterateur.getCourant());
-			iterateur = liste.begin();
-			Assert::IsTrue(combinaison1 == iterateur.getCourant()->getElement());
+			Assert::IsTrue(combinaison1 == liste.getPremierNoeud()->getElement());
+			liste.retirer(liste.getPremierNoeud());
+			Assert::IsTrue(combinaison2 == liste.getPremierNoeud()->getElement());
+			liste.retirer(liste.getPremierNoeud());
+			Assert::IsTrue(combinaison3 == liste.getPremierNoeud()->getElement());
+			liste.retirer(liste.getPremierNoeud());
 
 			delete combinaison1;
 			delete combinaison2;
 			delete combinaison3;
+		}
+
+		TEST_METHOD(ajouter_whenListContainsOneElement_shouldMaintainsReferenceNeighborhood)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			liste.ajouter(combinaison);
+
+			Iterateur<Combinaison> current = liste.begin();
+			Assert::IsTrue(current.getCourant()->getElement() == combinaison);
+			Assert::IsTrue(current.getCourant()->getPrecedent() == nullptr);
+			Assert::IsTrue(current.getCourant()->getSuivant() == nullptr);
+
+			Assert::AreEqual(1, liste.getNbElements());
+			Assert::IsFalse(liste.isEmpty());
+
+			delete combinaison;
+		}
+
+		TEST_METHOD(ajouter_whenListContainsTwoElement_shouldMaintainsReferenceNeighborhood)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			Combinaison* combinaison2 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			liste.ajouter(combinaison1);
+			liste.ajouter(combinaison2);
+
+			Iterateur<Combinaison> current = liste.begin();
+			Assert::IsTrue(current.getCourant()->getElement() == combinaison1);
+			Assert::IsTrue(current.getCourant()->getPrecedent() == nullptr);
+			Assert::IsTrue(current.getCourant()->getSuivant()->getElement() == combinaison2);
+			++current;
+			Assert::IsTrue(current.getCourant()->getElement() == combinaison2);
+			Assert::IsTrue(current.getCourant()->getPrecedent()->getElement() == combinaison1);
+			Assert::IsTrue(current.getCourant()->getSuivant() == nullptr);
+
+			Assert::AreEqual(2, liste.getNbElements());
+			Assert::IsFalse(liste.isEmpty());
+
+			delete combinaison1;
+			delete combinaison2;
+		}
+		TEST_METHOD(ajouter_whenListContainsMultipleElements_shouldMaintainsReferenceNeighborhood)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaisons[NB_COULEURS];
+			for (int i = 1; i <= NB_COULEURS; i++)
+			{
+				combinaisons[i - 1] = new Combinaison(Couleur(i), Couleur(i), Couleur(i), Couleur(i));
+				liste.ajouter(combinaisons[i - 1]);
+			}
+
+			Iterateur<Combinaison> current = liste.begin();
+			Assert::IsTrue(combinaisons[0] == current.getCourant()->getElement());
+			Assert::IsTrue(current.getCourant()->getSuivant()->getElement() == combinaisons[1]);
+			++current;
+			for (int i = 1;i < NB_COULEURS - 1;i++)
+			{
+				Assert::IsTrue(combinaisons[i - 1] == current.getCourant()->getPrecedent()->getElement());
+				Assert::IsTrue(combinaisons[i] == current.getCourant()->getElement());
+				Assert::IsTrue(combinaisons[i + 1] == current.getCourant()->getSuivant()->getElement());
+				++current;
+			}
+			Assert::IsTrue(combinaisons[NB_COULEURS - 1] == current.getCourant()->getElement());
+			Assert::IsTrue(current.getCourant()->getPrecedent()->getElement() == combinaisons[NB_COULEURS - 2]);
+			Assert::AreEqual(NB_COULEURS, (unsigned)liste.getNbElements());
+			for (int i = 0; i < NB_COULEURS; i++)
+				delete combinaisons[i];
 		}
 
 		#pragma endregion
@@ -248,5 +313,43 @@ namespace Tests_Liste_Double
 		}
 
 		#pragma endregion
+
+		#pragma region Tests de begin()
+		TEST_METHOD(begin_whenListIsEmpty_shouldReturnEnd)
+		{
+			ListeDouble<Combinaison> liste;
+
+			Assert::IsTrue(liste.begin() == liste.end());
+		}
+
+		TEST_METHOD(begin_whenListIsEmpty_shouldNotReturnEnd)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+
+			liste.ajouter(combinaison);
+
+			Assert::IsTrue(liste.begin() != liste.end());
+			delete combinaison;
+		}
+
+		TEST_METHOD(begin_whenListHasElements_shouldReturnFirstNode)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			liste.ajouter(combinaison);
+
+			Assert::IsTrue(liste.begin().getCourant() == liste.getPremierNoeud());
+			delete combinaison;
+		}
+
+		#pragma endregion
+
+		TEST_METHOD(end_shouldReturnNull)
+		{
+			ListeDouble<Combinaison> liste;
+
+			Assert::IsTrue(liste.end() == nullptr);
+		}
 	};
 }
