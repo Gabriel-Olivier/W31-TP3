@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ListeDouble.h"
-
 #include "Combinaison.h"
 #include "Couleur.h"
 
@@ -18,6 +17,8 @@ public:
 
 private:
 	bool validerCombinaison(Combinaison* _toValidate, Combinaison* _ref, short* _tabVerdicts);
+    void createCombinaisons();
+    void deleteCombinaisons();
 
     ListeDouble<Combinaison>* liste; //Contient toutes les combinaisons de couleurs possibles, selon le contexte.
     Combinaison* tabCombinaisons[NB_COMBINAISONS_POSSIBLES];

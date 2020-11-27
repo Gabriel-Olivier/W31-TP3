@@ -258,7 +258,7 @@ namespace Tests_Liste_Double
 			Assert::IsTrue(combinaisons[0] == current.getCourant()->getElement());
 			Assert::IsTrue(current.getCourant()->getSuivant()->getElement() == combinaisons[1]);
 			++current;
-			for (int i = 1;i < NB_COULEURS - 1;i++)
+			for (int i = 1; i < NB_COULEURS - 1; i++)
 			{
 				Assert::IsTrue(combinaisons[i - 1] == current.getCourant()->getPrecedent()->getElement());
 				Assert::IsTrue(combinaisons[i] == current.getCourant()->getElement());
@@ -345,11 +345,24 @@ namespace Tests_Liste_Double
 
 		#pragma endregion
 
+		#pragma region Test de end()
+
 		TEST_METHOD(end_shouldReturnNull)
 		{
 			ListeDouble<Combinaison> liste;
 
 			Assert::IsTrue(liste.end() == nullptr);
 		}
+
+		#pragma endregion
+
+		#pragma region Tests de getElement()
+		
+		TEST_METHOD(getElement)
+		{
+
+		}
+
+		#pragma endregion
 	};
 }

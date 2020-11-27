@@ -1,16 +1,15 @@
 #include "Mastermind.h"
 
-
 Mastermind::Mastermind(ListeDouble<Combinaison>* _liste)
 {
-	// Créer les 4096 combinaisons
+	this->liste = _liste;
+	this->createCombinaisons();
 }
 
 Mastermind::~Mastermind()
 {
-
+	this->deleteCombinaisons();
 }
-
 
 int Mastermind::getNbElements() const
 {
@@ -57,4 +56,31 @@ short Mastermind::nettoyerListe(Combinaison* _ref, short* _tabVerdicts)
 	//Le nombre de combinaisons supprimées doit être retourné.
 
 	return 0;
+}
+
+void Mastermind::createCombinaisons()
+{
+	int index = 0;
+	for (int i = 1; i <= NB_COULEURS; i++)
+	{
+		for (int j = 1; j <= NB_COULEURS; j++)
+		{
+			for (int k = 1; k <= NB_COULEURS; k++)
+			{
+				for (int w = 1; w <= NB_COULEURS; w++)
+				{
+					Combinaison* combinaison = new Combinaison(Couleur(i), Couleur(j), Couleur(k), Couleur(w));
+					this->tabCombinaisons[index] = combinaison;
+					this->liste->ajouter(combinaison);
+					index++;
+				}
+			}
+		}
+	}
+}
+
+void Mastermind::deleteCombinaisons()
+{
+	for (int i = 0; i < NB_COMBINAISONS_POSSIBLES; i++)
+		delete this->tabCombinaisons[i];
 }

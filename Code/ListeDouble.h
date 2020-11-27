@@ -20,8 +20,8 @@ public:
 	bool retirer(Noeud<T>* _noeudCourant);
 	Noeud<T>* getPremierNoeud();
 
-	Iterateur<T> begin();
-	Iterateur<T> end();
+	Iterateur<T> begin() const;
+	Iterateur<T> end() const;
 
 	void affiche();
 
@@ -60,7 +60,7 @@ bool ListeDouble<T>::ajouter(T* _element)
 	}
 	else if (*_element != *firstElement)
 	{
-		Iterateur<T> current = begin();
+		Iterateur<T> current = this->begin();
 		while (current.getCourant()->getSuivant() && *current.getCourant()->getSuivant()->getElement() < *_element)
 			++current;
 		isPushed = this->pushAt(current, _element);
@@ -76,10 +76,8 @@ T* ListeDouble<T>::getElement(int index) const
 	{
 		Iterateur<T> current = this->begin();
 		for (int i = 0; i < index; i++)
-		{
 			++current;
-		}
-		element = current.getCourant();
+		element = current.getCourant()->getElement();
 	}
 	return element;
 }
@@ -128,13 +126,13 @@ Noeud<T>* ListeDouble<T>::getPremierNoeud()
 }
 
 template<class T>
-Iterateur<T> ListeDouble<T>::begin()
+Iterateur<T> ListeDouble<T>::begin() const
 {
 	return Iterateur<T>(this->premierNoeud);
 }
 
 template<class T>
-Iterateur<T> ListeDouble<T>::end()
+Iterateur<T> ListeDouble<T>::end() const
 {
 	return Iterateur<T>(nullptr);
 }
