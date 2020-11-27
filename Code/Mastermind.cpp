@@ -3,8 +3,7 @@
 
 Mastermind::Mastermind(ListeDouble<Combinaison>* _liste)
 {
-   //Il faut créer ici les 4096 combinaisons de couleurs possibles. Bonne réflexion!
-	
+	// Créer les 4096 combinaisons
 }
 
 Mastermind::~Mastermind()
@@ -15,7 +14,7 @@ Mastermind::~Mastermind()
 
 int Mastermind::getNbElements() const
 {
-	return 0;
+	return this->liste->getNbElements();
 }
 
 /// <summary>
@@ -25,7 +24,7 @@ int Mastermind::getNbElements() const
 /// <returns>L'élément qui est à la position index</returns>
 Combinaison* Mastermind::getElement(int index) const
 {
-	return nullptr;
+	return this->liste->getElement(index);
 }
 
 bool Mastermind::validerCombinaison(Combinaison* _toValidate, Combinaison* _ref, short* _tabVerdicts)

@@ -42,7 +42,8 @@ inline std::ostream& white(std::ostream& s)
     return s;
 }
 
-struct color {
+struct color
+{
     color(WORD attribute) :m_color(attribute) {};
     WORD m_color;
 };
@@ -57,4 +58,3 @@ operator<<(std::basic_ostream<_Elem, _Traits>& i, color& c)
 }
 
 // Copyleft Vincent Godin
-

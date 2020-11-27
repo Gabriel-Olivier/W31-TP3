@@ -2,7 +2,8 @@
 #include <iostream>
 using namespace std;
 
-class Couleur{
+class Couleur
+{
 public:
     Couleur(void);
     Couleur(short _c);
@@ -28,4 +29,3 @@ public:
 private:
     short couleur;
 };
-

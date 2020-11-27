@@ -12,6 +12,7 @@ public:
 	~ListeDouble();
 
 	bool ajouter(T* _element) override;
+	T* getElement(int index) const;
 	int getNbElements() const override;
 	bool isEmpty() const override;
 	void vider() override;
@@ -63,19 +64,29 @@ bool ListeDouble<T>::ajouter(T* _element)
 		Iterateur<T> current = this->begin();
 		while (*_element > *current)
 		{
-			if (current.getCourant()->getSuivant() != nullptr)
-			{
-				++current;
-			}
-			else
-			{
-				break;
-			}
+			if (current.getCourant()->getSuivant() != nullptr) ++current;
+			else break;
 		}
 		isPushed = this->pushAt(current, _element);
 	}
 	if (isPushed) this->nbElements++;
 	return isPushed;
+}
+
+template<class T>
+T* ListeDouble<T>::getElement(int index) const
+{
+	T* element = nullptr;
+	if (index >= 0 && index < this->nbElements)
+	{
+		Iterateur<T> current = this->begin();
+		for (int i = 0; i < index; i++)
+		{
+			++current;
+		}
+		element = current.getCourant();
+	}
+	return element;
 }
 
 template<class T>

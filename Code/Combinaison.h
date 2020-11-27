@@ -16,6 +16,7 @@ public:
 	bool operator != (const Combinaison& _combinaison) const;
 
 	int convertToNumeric() const;
+
 private:
 	Couleur tabCouleurs[NB_COULEURS_COMBINAISON];
 };
