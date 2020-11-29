@@ -244,6 +244,7 @@ namespace Tests_Liste_Double
 			delete combinaison1;
 			delete combinaison2;
 		}
+
 		TEST_METHOD(ajouter_whenListContainsMultipleElements_shouldMaintainsReferenceNeighborhood)
 		{
 			ListeDouble<Combinaison> liste;
