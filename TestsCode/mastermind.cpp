@@ -6,7 +6,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Tests_Mastermind
 {
-	TEST_CLASS(mastermind)
+	TEST_CLASS(Mastermind_Tests)
 	{
 
 	};

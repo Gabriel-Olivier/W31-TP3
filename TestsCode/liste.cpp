@@ -8,7 +8,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Tests_Liste_Double
 {		
-	TEST_CLASS(Liste_Double)
+	TEST_CLASS(Liste_Double_Tests)
 	{
 		#pragma region Tests de getPremierNoeud()
 
@@ -371,7 +371,7 @@ namespace Tests_Liste_Double
 			delete combinaison;
 		}
 
-		TEST_METHOD(getElement_whenListContainsMultipleElements_shouldReturnTheGoodElement)
+		TEST_METHOD(getElement_whenListContainsMultipleElements_shouldReturnTheRightElement)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
@@ -398,7 +398,7 @@ namespace Tests_Liste_Double
 			delete combinaison;
 		}
 
-		TEST_METHOD(getElement_whenAnElementIsRemovedFromTheList_shouldReturnTheGoodElement)
+		TEST_METHOD(getElement_whenAnElementIsRemovedFromTheList_shouldReturnTheRightElement)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
