@@ -33,6 +33,14 @@ bool Mastermind::validerCombinaison(Combinaison* _toValidate, Combinaison* _ref,
 	//Pour chacune des couleurs présentes dans toValidate, 3 verdicts possibles doivent être pris en considération pour éléminer ou non la combinaison, 
 	//il s'agit de "Bonne couleur, bonne place" (valeur 1), "Bonne couleur, mauvaise place" (valeur 2) et "Mauvaise couleur" (valeur 3).
 
+	for (int i = 0;i < 4;i++)
+	{
+		if (_tabVerdicts[i] == 1)
+		{
+			
+		}
+	}
+
 	//Voici un ébauche d'algorithme qui devrait vous aider à compléter cette méthode:
 	//Pour chacune des couleurs de la combinaison toValidate, vérifiez:
 	
@@ -54,6 +62,13 @@ short Mastermind::nettoyerListe(Combinaison* _ref, short* _tabVerdicts)
 	//Épure la liste de combinaisons de couleurs en fonction de la combinaison reçue et des 4 verdicts (valeurs 1 à 3).
 	//Pour chacune des combinaisons de la liste, vérifier si elle doit être retirée ou non de liste.
 	//Le nombre de combinaisons supprimées doit être retourné.
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (_tabVerdicts[i] == 1)
+		{
+		}
+	}
 
 	return 0;
 }

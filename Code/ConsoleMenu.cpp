@@ -137,11 +137,13 @@ bool ConsoleMenu::saisirSequence(Couleur* tabCouleurs)
 
 bool ConsoleMenu::partieEstTerminee(short* tabVerdicts)
 {
-    if (tabVerdicts[0] == 1 && tabVerdicts[1] == 1 && tabVerdicts[2] == 1 && tabVerdicts[3] == 1) {
-        return false;
-    }
-    else {
+    if (tabVerdicts[0] == 1 && tabVerdicts[1] == 1 && tabVerdicts[2] == 1 && tabVerdicts[3] == 1)
+    {
         return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
