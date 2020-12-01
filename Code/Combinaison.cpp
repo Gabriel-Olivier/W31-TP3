@@ -31,7 +31,7 @@ bool Combinaison::operator>(const Combinaison& _combinaison) const
 bool Combinaison::operator==(const Combinaison& _combinaison) const
 {
 	bool sameCombinaisons = true;
-	for (int i = 0; i < NB_COULEURS_COMBINAISON; i++)
+	for (int i = 0; i < NB_COULEURS_PAR_COMBINAISON; i++)
 	{
 		if (this->getCouleur(i) != _combinaison.getCouleur(i))
 		{

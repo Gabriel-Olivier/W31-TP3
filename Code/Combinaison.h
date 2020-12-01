@@ -18,5 +18,5 @@ public:
 	int convertToNumeric() const;
 
 private:
-	Couleur tabCouleurs[NB_COULEURS_COMBINAISON];
+	Couleur tabCouleurs[NB_COULEURS_PAR_COMBINAISON];
 };

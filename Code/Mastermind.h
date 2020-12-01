@@ -20,7 +20,8 @@ private:
     void createCombinaisons();
     void deleteCombinaisons();
 
-    void removeCombinaisonWith(short colorPos, short colorId);
+    short removeCombinaisonsWithColorAtPosition(short colorPos, short colorId);
+    short removeCombinaisonsWithAllColorsExceptAtPosition(short colorPos, short validColorId);
 
     ListeDouble<Combinaison>* liste; //Contient toutes les combinaisons de couleurs possibles, selon le contexte.
     Combinaison* tabCombinaisons[NB_COMBINAISONS_POSSIBLES];
