@@ -321,9 +321,10 @@ namespace Tests_Liste_Double
 			ListeDouble<Combinaison> liste;
 
 			Assert::IsTrue(liste.begin() == liste.end());
+			Assert::IsNull(liste.begin().getCourant());
 		}
 
-		TEST_METHOD(begin_whenListIsEmpty_shouldNotReturnEnd)
+		TEST_METHOD(begin_whenListContainsOneElement_shouldNotReturnEnd)
 		{
 			ListeDouble<Combinaison> liste;
 			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
@@ -331,16 +332,9 @@ namespace Tests_Liste_Double
 			liste.ajouter(combinaison);
 
 			Assert::IsTrue(liste.begin() != liste.end());
-			delete combinaison;
-		}
-
-		TEST_METHOD(begin_whenListHasElements_shouldReturnFirstNode)
-		{
-			ListeDouble<Combinaison> liste;
-			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
-			liste.ajouter(combinaison);
-
+			Assert::IsNotNull(liste.begin().getCourant());
 			Assert::IsTrue(liste.begin().getCourant() == liste.getPremierNoeud());
+
 			delete combinaison;
 		}
 
@@ -352,18 +346,73 @@ namespace Tests_Liste_Double
 		{
 			ListeDouble<Combinaison> liste;
 
-			Assert::IsTrue(liste.end() == nullptr);
+			Assert::IsNull(liste.end().getCourant());
 		}
 
 		#pragma endregion
 
 		#pragma region Tests de getElement()
 		
-		TEST_METHOD(getElement)
+		TEST_METHOD(getElement_whenListIsEmpty_shouldReturnNull)
 		{
+			ListeDouble<Combinaison> liste;
 
+			Assert::IsNull(liste.getElement(0));
+		}
+		
+		TEST_METHOD(getElement_whenListContainsOneElement_shouldReturnTheElement)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			liste.ajouter(combinaison);
+
+			Assert::IsTrue(combinaison == liste.getElement(0));
+
+			delete combinaison;
 		}
 
+		TEST_METHOD(getElement_whenListContainsMultipleElements_shouldReturnTheGoodElement)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			Combinaison* combinaison2 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			liste.ajouter(combinaison1);
+			liste.ajouter(combinaison2);
+
+			Assert::IsTrue(combinaison1 == liste.getElement(0));
+			Assert::IsTrue(combinaison2 == liste.getElement(1));
+
+			delete combinaison1;
+			delete combinaison2;
+		}
+
+		TEST_METHOD(getElement_whenAnElementIsRemovedFromTheList_shouldReturnNull)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			liste.ajouter(combinaison);
+			liste.retirer(liste.getPremierNoeud());
+
+			Assert::IsNull(liste.getElement(0));
+
+			delete combinaison;
+		}
+
+		TEST_METHOD(getElement_whenAnElementIsRemovedFromTheList_shouldReturnTheGoodElement)
+		{
+			ListeDouble<Combinaison> liste;
+			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
+			Combinaison* combinaison2 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
+			liste.ajouter(combinaison1);
+			liste.ajouter(combinaison2);
+			liste.retirer(liste.getPremierNoeud());
+
+			Assert::IsTrue(combinaison2 == liste.getElement(0));
+
+			delete combinaison1;
+			delete combinaison2;
+		}
+		
 		#pragma endregion
 	};
 }
