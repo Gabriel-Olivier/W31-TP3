@@ -49,8 +49,8 @@ bool Combinaison::operator!=(const Combinaison& _combinaison) const
 
 int Combinaison::convertToNumeric() const
 {
-	return this->getCouleur(0).convertToNumeric() * 1000 +
-		   this->getCouleur(1).convertToNumeric() * 100 +
-		   this->getCouleur(2).convertToNumeric() * 10 +
-		   this->getCouleur(3).convertToNumeric() * 1;
+	return this->getCouleur(0).getCouleur() * 1000 +
+		   this->getCouleur(1).getCouleur() * 100 +
+		   this->getCouleur(2).getCouleur() * 10 +
+		   this->getCouleur(3).getCouleur() * 1;
 }

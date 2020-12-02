@@ -25,6 +25,7 @@ namespace Tests_Iterateur
 			Iterateur<Combinaison> iterateur = liste.begin();
 
 			Assert::IsTrue(iterateur.getCourant()->getElement() == combinaison);
+			delete combinaison;
 		}
 
 		TEST_METHOD(getCourant_whenListContainsTwoElementsAndPlusOperatorUsed_shouldReturnTheRightElement)
@@ -39,6 +40,9 @@ namespace Tests_Iterateur
 			++iterateur;
 
 			Assert::IsTrue(iterateur.getCourant()->getElement() == combinaison2);
+
+			delete combinaison1;
+			delete combinaison2;
 		}
 
 		TEST_METHOD(getCourant_whenThePointedElementIsRemoved_shouldPointToNullNode)
@@ -52,6 +56,9 @@ namespace Tests_Iterateur
 			liste.retirer(iterateur.getCourant());
 
 			Assert::IsTrue(iterateur.getCourant() == nullptr);
+
+			delete combinaison1;
+			delete combinaison2;
 		}
 
 		TEST_METHOD(getCourant_whenListContainsTwoElementsAndOneIsRemoved_shouldReturnTheRightElement)
@@ -66,6 +73,9 @@ namespace Tests_Iterateur
 			iterateur = liste.begin();
 
 			Assert::IsTrue(iterateur.getCourant()->getElement() == combinaison2);
+
+			delete combinaison1;
+			delete combinaison2;
 		}
 	};
 }

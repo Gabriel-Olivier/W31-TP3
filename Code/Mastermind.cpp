@@ -130,12 +130,12 @@ short Mastermind::removeCombinaisonsWithColorAtPosition(short colorPos, short co
 	for (int i = 0; i < this->liste->getNbElements(); i++)
 	{
 		Noeud<Combinaison>* currentNode = currentCombinaison.getCourant();
+		++currentCombinaison;
 		if (currentNode->getElement()->getCouleur(colorPos).getCouleur() == colorId)
 		{
 			this->liste->retirer(currentNode);
 			numberOfCombinaisonsRemoved++;
 		}
-		++currentCombinaison;
 	}
 	return numberOfCombinaisonsRemoved;
 }
