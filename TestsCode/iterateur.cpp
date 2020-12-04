@@ -45,22 +45,6 @@ namespace Tests_Iterateur
 			delete combinaison2;
 		}
 
-		TEST_METHOD(getCourant_whenThePointedElementIsRemoved_shouldPointToNullNode)
-		{
-			ListeDouble<Combinaison> liste;
-			Combinaison* combinaison1 = new Combinaison(Couleur(1), Couleur(1), Couleur(1), Couleur(1));
-			Combinaison* combinaison2 = new Combinaison(Couleur(2), Couleur(2), Couleur(2), Couleur(2));
-			liste.ajouter(combinaison1);
-			liste.ajouter(combinaison2);
-			Iterateur<Combinaison> iterateur = liste.begin();
-			liste.retirer(iterateur.getCourant());
-
-			Assert::IsTrue(iterateur.getCourant() == nullptr);
-
-			delete combinaison1;
-			delete combinaison2;
-		}
-
 		TEST_METHOD(getCourant_whenListContainsTwoElementsAndOneIsRemoved_shouldReturnTheRightElement)
 		{
 			ListeDouble<Combinaison> liste;

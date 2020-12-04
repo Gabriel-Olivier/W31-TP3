@@ -40,17 +40,17 @@ Combinaison* Mastermind::getElement(int index) const
 /// <summary>
 /// Permet de supprimer les combinaisons qui ne sont plus valides de la liste
 /// </summary>
-/// <param name="_ref">La combinaison à trouver</param>
+/// <param name="_ref">La combinaison essayée</param>
 /// <param name="_tabVerdicts">Les verdicts pour chaque couleur de la combinaison essayée (entre 1 et 3 inclusivement)</param>
 /// <returns>Le nombre de combinaisons supprimées de la liste</returns>
 short Mastermind::nettoyerListe(Combinaison* _ref, short* _tabVerdicts)
 {
 	int numberOfCombinaisonsRemoved = 0;
 
-	// Pour chaque couleur de la combinaison à trouver
+	// Pour chaque couleur de la combinaison essayée
 	for (int currentColorPos = 0; currentColorPos < NB_COULEURS_PAR_COMBINAISON; currentColorPos++)
 	{
-		// On obtient le verdict et la couleur à trouver
+		// On obtient le verdict et la couleur essayée
 		int currentVerdict = _tabVerdicts[currentColorPos];
 		short currentColorId = _ref->getCouleur(currentColorPos).getCouleur();
 

@@ -75,10 +75,12 @@ void ConsoleMenu::run()
                 if (partieEstTerminee(tabVerdicts))
                 {
                     afficherResultat(nbCoups);
+                    delete liste;
+                    return;
                 }
                 else
                 {
-                    //------------------------Epuration de la liste des combinaisons qui ne respectent pas les critères-----------------------------
+                    //------------------------Épuration de la liste des combinaisons qui ne respectent pas les critères-----------------------------
                     cout << mastermind.nettoyerListe(tabCouleursRef, tabVerdicts) << " combinaisons supprimees." << endl;
                 }
             }
