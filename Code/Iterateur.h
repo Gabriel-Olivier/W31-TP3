@@ -34,7 +34,9 @@ private:
 /// </summary>
 /// <typeparam name="T">Le type du noeud contenu dans l'itérateur</typeparam>
 template<class T>
-Iterateur<T>::Iterateur() {}
+Iterateur<T>::Iterateur()
+{
+}
 
 /// <summary>
 /// Initialise un itérateur avec un noeud

@@ -16,7 +16,6 @@ public:
     short nettoyerListe(Combinaison* _ref, short* _tabVerdicts);
 
 private:
-	bool validerCombinaison(Combinaison* _toValidate, Combinaison* _ref, short* _tabVerdicts);
     void createCombinaisons();
     void deleteCombinaisons();
 

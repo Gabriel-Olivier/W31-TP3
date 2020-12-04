@@ -1,11 +1,18 @@
 #include "Mastermind.h"
 
+/// <summary>
+/// Constructeur de Mastermind
+/// </summary>
+/// <param name="_liste">La liste des combinaisons possibles</param>
 Mastermind::Mastermind(ListeDouble<Combinaison>* _liste)
 {
 	this->liste = _liste;
 	this->createCombinaisons();
 }
 
+/// <summary>
+/// Destructeur de Mastermind
+/// </summary>
 Mastermind::~Mastermind()
 {
 	this->deleteCombinaisons();
@@ -30,57 +37,36 @@ Combinaison* Mastermind::getElement(int index) const
 	return this->liste->getElement(index);
 }
 
-bool Mastermind::validerCombinaison(Combinaison* _toValidate, Combinaison* _ref, short* _tabVerdicts)
-{
-	//A COMPLETER
-	//Vérifiez si la combinaison toValidate doit être retirée ou non de la liste, en fonction d'une combinaison de référence et d'un tableau de 4 verdicts.
-	//Pour chacune des couleurs présentes dans toValidate, 3 verdicts possibles doivent être pris en considération pour éléminer ou non la combinaison, 
-	//il s'agit de "Bonne couleur, bonne place" (valeur 1), "Bonne couleur, mauvaise place" (valeur 2) et "Mauvaise couleur" (valeur 3).
-
-
-	//Voici un ébauche d'algorithme qui devrait vous aider à compléter cette méthode:
-	//Pour chacune des couleurs de la combinaison toValidate, vérifiez:
-	
-	//Si le verdict est 1 (Bonne couleur, bonne place) et que la combinaison de couleurs à valider n'a pas la couleur à la même place que 
-	//la combinaison de référence, il faut la retirer de la liste.
-
-	//Si le verdict est 2 (Bonne couleur, mauvaise place) et que la combinaison de couleurs à valider n'a pas la couleur à un autre emplacement que
-	//celui de la combinaison de référence, il faut la retirer de la liste.
-
-	//Si le verdict est 3 (Mauvaise couleur) et que la combinaison de couleurs à valider a la couleur, il faut la retirer de la liste.
-
-	//Retournez true si la combinaison est valide (respecte les verdicts) et false dans le cas contraire.
-	return 0;
-}
-
+/// <summary>
+/// Permet de supprimer les combinaisons qui ne sont plus valides de la liste
+/// </summary>
+/// <param name="_ref">La combinaison à trouver</param>
+/// <param name="_tabVerdicts">Les verdicts pour chaque couleur de la combinaison essayée (entre 1 et 3 inclusivement)</param>
+/// <returns>Le nombre de combinaisons supprimées de la liste</returns>
 short Mastermind::nettoyerListe(Combinaison* _ref, short* _tabVerdicts)
 {
-	//A COMPLETER
-	//Épure la liste de combinaisons de couleurs en fonction de la combinaison reçue et des 4 verdicts (valeurs 1 à 3).
-	//Pour chacune des combinaisons de la liste, vérifier si elle doit être retirée ou non de liste.
-	//Le nombre de combinaisons supprimées doit être retourné.
-
 	int numberOfCombinaisonsRemoved = 0;
 
+	// Pour chaque couleur de la combinaison à trouver
 	for (int currentColorPos = 0; currentColorPos < NB_COULEURS_PAR_COMBINAISON; currentColorPos++)
 	{
+		// On obtient le verdict et la couleur à trouver
 		int currentVerdict = _tabVerdicts[currentColorPos];
 		short currentColorId = _ref->getCouleur(currentColorPos).getCouleur();
+
+		// Si c'est une bonne couleur au bon endroit
 		if (currentVerdict == 1)
-		{
 			numberOfCombinaisonsRemoved += this->removeCombinaisonsWithAllColorsExceptAtPosition(currentColorPos, currentColorId);
-		}
+
+		// Si c'est uniquement une bonne couleur
 		else if (currentVerdict == 2)
-		{
 			numberOfCombinaisonsRemoved += this->removeCombinaisonsWithColorAtPosition(currentColorPos, currentColorId);
-		}
+
+		// Si ce n'est pas une bonne couleur
 		else if (currentVerdict == 3)
 		{
 			for (int i = 0; i < NB_COULEURS_PAR_COMBINAISON; i++)
-			{
 				numberOfCombinaisonsRemoved += this->removeCombinaisonsWithColorAtPosition(i, currentColorId);
-			}
-		
 		}
 	}
 
@@ -88,7 +74,7 @@ short Mastermind::nettoyerListe(Combinaison* _ref, short* _tabVerdicts)
 }
 
 /// <summary>
-/// Permet de générer toutes les combinaisons possibles du jeu mastermind
+/// Permet de générer toutes les combinaisons possibles
 /// </summary>
 void Mastermind::createCombinaisons()
 {
@@ -128,19 +114,28 @@ void Mastermind::deleteCombinaisons()
 /// <returns>Le nombre de combinaisons supprimées</returns>
 short Mastermind::removeCombinaisonsWithColorAtPosition(short colorPos, short colorId)
 {
-	Iterateur<Combinaison> currentCombinaison = this->liste->begin();
 	short numberOfCombinaisonsRemoved = 0;
-	while(currentCombinaison != this->liste->end())
+
+	// On place un itérateur au début de la liste des combinaisons
+	Iterateur<Combinaison> currentCombinaison = this->liste->begin();
+	
+	// Tant que l'itérateur n'a pas atteint la fin de la liste
+	while (currentCombinaison != this->liste->end())
 	{
+		// On obtient la combinaison pointée par l'itérateur
 		Noeud<Combinaison>* currentNode = currentCombinaison.getCourant();
+
+		// On déplace l'itérateur à la combinaison suivante
 		++currentCombinaison;
+
+		// Si la combinaison a la couleur spécifiée à la position spécifiée, on la supprime de la liste
 		if (currentNode->getElement()->getCouleur(colorPos).getCouleur() == colorId)
 		{
-			std::cout << "DELETED : " << currentNode->getElement()->convertToNumeric() << std::endl;
 			this->liste->retirer(currentNode);
 			numberOfCombinaisonsRemoved++;
 		}
 	}
+
 	return numberOfCombinaisonsRemoved;
 }
 
@@ -153,10 +148,14 @@ short Mastermind::removeCombinaisonsWithColorAtPosition(short colorPos, short co
 short Mastermind::removeCombinaisonsWithAllColorsExceptAtPosition(short colorPos, short validColorId)
 {
 	short numberOfCombinaisonsRemoved = 0;
+
+	// Pour chaque couleur possible
 	for (int currentColorId = 1; currentColorId <= NB_COULEURS; currentColorId++)
 	{
+		// Si la couleur n'est pas celle valide à la position spécifiée, on supprime la combinaison
 		if (currentColorId != validColorId)
 			numberOfCombinaisonsRemoved += this->removeCombinaisonsWithColorAtPosition(colorPos, currentColorId);
 	}
+
 	return numberOfCombinaisonsRemoved;
 }
