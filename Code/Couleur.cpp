@@ -19,10 +19,12 @@ Couleur::Couleur(short _c)
 /// <summary>
 /// Destructeur d'une couleur
 /// </summary>
-Couleur::~Couleur(void) {}
+Couleur::~Couleur(void)
+{
+}
 
 /// <summary>
-/// Surchage l'affichage d'une couleur dans la console avec le nom des couleur
+/// Surchage l'affichage d'une couleur dans la console avec le nom des couleurs
 /// </summary>
 /// <param name="sortie">Le stream à écrire</param>
 /// <param name="c">La couleur à afficher</param>
@@ -99,6 +101,10 @@ bool Couleur::operator!=(const Couleur& c)
     return this->couleur != c.couleur;
 }
 
+/// <summary>
+/// Permet de mettre la couleur égale à une autre
+/// </summary>
+/// <param name="c">La couleur de référence</param>
 void Couleur::operator=(const Couleur& c)
 { 
     this->couleur = c.couleur;

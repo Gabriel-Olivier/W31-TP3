@@ -5,9 +5,9 @@
 #include "Iterateur.h"
 
 /// <summary>
-/// Liste chainée bidirectionelle
+/// Liste chaînée bidirectionelle
 /// </summary>
-/// <typeparam name="T">Le type d'élément qye stocke la liste</typeparam>
+/// <typeparam name="T">Le type d'élément que stocke la liste</typeparam>
 template<class T>
 class ListeDouble : public ListeBase<T>
 {
@@ -36,7 +36,7 @@ private:
 	bool pushAt(Iterateur<T>& it, T* _element);
 
 	/// <summary>
-	/// Repr/sente le premier noeud de la liste
+	/// Représente le premier noeud de la liste
 	/// </summary>
 	Noeud<T>* premierNoeud;
 
@@ -49,7 +49,7 @@ private:
 /// <summary>
 /// Constructeur de la liste
 /// </summary>
-/// <typeparam name="T">Le type d'élément qye stocke la liste</typeparam>
+/// <typeparam name="T">Le type d'élément que stocke la liste</typeparam>
 template<class T>
 ListeDouble<T>::ListeDouble()
 {
@@ -61,7 +61,7 @@ ListeDouble<T>::ListeDouble()
 /// <summary>
 /// Détruit la liste et supprime ses éléments
 /// </summary>
-/// <typeparam name="T">Le type d'élément qye stocke la liste</typeparam>
+/// <typeparam name="T">Le type d'élément que stocke la liste</typeparam>
 template<class T>
 ListeDouble<T>::~ListeDouble()
 {
@@ -71,7 +71,7 @@ ListeDouble<T>::~ListeDouble()
 /// <summary>
 /// Ajoute un nouvel élément à la liste
 /// </summary>
-/// <typeparam name="T">Le type d'élément qye stocke la liste</typeparam>
+/// <typeparam name="T">Le type d'élément que stocke la liste</typeparam>
 /// <param name="_element">L'élément à ajouter</param>
 /// <returns>Retourne vrai si l'élément passé en paramètre s'est ajouté à la liste, faux sinon</returns>
 template<class T>
@@ -253,7 +253,7 @@ bool ListeDouble<T>::deleteFront()
 /// </summary>
 /// <typeparam name="T">Le type d'élément que stocke la liste</typeparam>
 /// <param name="it">L'itérateur contenant le noeud à supprimer</param>
-/// <returns>Retourne vrai si le noeud contenu dans l'itérateur spécifié en paramètret a été supprimé, faux sinon</returns>
+/// <returns>Retourne vrai si le noeud contenu dans l'itérateur spécifié en paramètre a été supprimé, faux sinon</returns>
 template<class T>
 bool ListeDouble<T>::deleteAt(Iterateur<T>& it)
 {
@@ -281,7 +281,7 @@ bool ListeDouble<T>::deleteAt(Iterateur<T>& it)
 /// <typeparam name="T">Le type d'élément que stocke la liste</typeparam>
 /// <param name="it">L'itérateur spécifiant la position</param>
 /// <param name="_element">L'élément à ajouter</param>
-/// <returns>Retourne vrai si l'élément spécifié en paramètre a été supprimer, faux sinon</returns>
+/// <returns>Retourne vrai si l'élément spécifié en paramètre a été supprimé, faux sinon</returns>
 template<class T>
 bool ListeDouble<T>::pushAt(Iterateur<T>& it, T* _element)
 {
