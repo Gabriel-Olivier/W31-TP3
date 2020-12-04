@@ -25,7 +25,7 @@ public:
     void operator=(const Couleur& _c);
 
     void setCouleur(short _c);
-    short getCouleur();
+    short getCouleur() const;
 
 private:
     /// <summary>

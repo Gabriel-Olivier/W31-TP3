@@ -123,7 +123,7 @@ void Couleur::setCouleur(short _c)
 /// Retourne l'identifiant de la couleur
 /// </summary>
 /// <returns>L'identifiant de la couleur</returns>
-short Couleur::getCouleur()
+short Couleur::getCouleur() const
 {
     return this->couleur;
 }

@@ -61,6 +61,61 @@ namespace Tests_Mastermind
 			Assert::IsTrue(combinaison == *liste.getElement(0));
 		}
 
+		TEST_METHOD(nettoyerListe_whenTriedCombinaisonIsTheValidOneButShuffled_shouldRemoveAllOtherCombinaisons)
+		{
+			ListeDouble<Combinaison> liste;
+			Mastermind mastermind(&liste);
+			const Couleur C1 = Couleur(1);
+			const Couleur C2 = Couleur(2);
+			const Couleur C3 = Couleur(3);
+			const Couleur C4 = Couleur(4);
+			Combinaison combinaison(C1, C2, C3, C4);
+			short verdicts[] = { 2, 2, 2, 2 };
+
+			mastermind.nettoyerListe(&combinaison, verdicts);
+
+			Iterateur<Combinaison> iterateur = liste.begin();
+			while (iterateur != liste.end())
+			{
+				Combinaison* current = iterateur.getCourant()->getElement();
+
+				Assert::IsTrue(current->getCouleur(0) != C1.getCouleur());
+				Assert::IsTrue(current->getCouleur(1) != C2.getCouleur());
+				Assert::IsTrue(current->getCouleur(2) != C3.getCouleur());
+				Assert::IsTrue(current->getCouleur(3) != C4.getCouleur());
+				++iterateur;
+			}
+		}
+
+		TEST_METHOD(nettoyerListe_whenTriedCombinaisonIsNotValid_shouldRemoveAllOtherCombinaisons)
+		{
+			ListeDouble<Combinaison> liste;
+			Mastermind mastermind(&liste);
+			const Couleur C1 = Couleur(1);
+			const Couleur C2 = Couleur(2);
+			const Couleur C3 = Couleur(3);
+			const Couleur C4 = Couleur(4);
+			Combinaison combinaison(C1, C2, C3, C4);
+			short verdicts[] = { 3, 3, 3, 3 };
+
+			mastermind.nettoyerListe(&combinaison, verdicts);
+
+			Iterateur<Combinaison> iterateur = liste.begin();
+			while (iterateur != liste.end())
+			{
+				Combinaison* current = iterateur.getCourant()->getElement();
+
+				for (int i = 0;i < NB_COULEURS_PAR_COMBINAISON;i++)
+				{
+					Assert::IsTrue(current->getCouleur(i) != C1.getCouleur());
+					Assert::IsTrue(current->getCouleur(i) != C2.getCouleur());
+					Assert::IsTrue(current->getCouleur(i) != C3.getCouleur());
+					Assert::IsTrue(current->getCouleur(i) != C4.getCouleur());
+				}
+				++iterateur;
+			}
+		}
+
 		#pragma endregion
 	};
 }
