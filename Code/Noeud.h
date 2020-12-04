@@ -42,6 +42,9 @@ private:
 template<class T>
 Noeud<T>::Noeud()
 {
+	this->suivant = nullptr;
+	this->precedent = nullptr;
+	this->element = nullptr;
 }
 
 /// <summary>
