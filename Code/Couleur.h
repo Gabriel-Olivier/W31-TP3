@@ -29,7 +29,7 @@ public:
 
 private:
     /// <summary>
-    /// L'identifiant spécifiant l'identifiant
+    /// L'identifiant spécifiant la couleur
     /// </summary>
     short couleur;
 };

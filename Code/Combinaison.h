@@ -2,6 +2,9 @@
 #include "Constants.h"
 #include "Couleur.h"
 
+/// <summary>
+/// Représente une combinaison de 4 couleurs
+/// </summary>
 class Combinaison
 {
 public:
@@ -18,5 +21,8 @@ public:
 	int convertToNumeric() const;
 
 private:
+	/// <summary>
+	/// Tableau contenant l'ensemble des couleurs de la combinaison
+	/// </summary>
 	Couleur tabCouleurs[NB_COULEURS_PAR_COMBINAISON];
 };
