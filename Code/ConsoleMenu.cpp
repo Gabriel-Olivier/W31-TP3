@@ -21,11 +21,11 @@ ConsoleMenu::~ConsoleMenu()
 /// </summary>
 void ConsoleMenu::run()
 {
-    ListeDouble<Combinaison>* liste = new ListeDouble<Combinaison>;
     bool partieContinue = true;
 
-    while (partieContinue) {
-
+    while (partieContinue)
+    {
+        ListeDouble<Combinaison>* liste = new ListeDouble<Combinaison>;
         Mastermind mastermind(liste);
 
         Couleur tabCouleurs[4]; //4 couleurs parmi un choix de 8
@@ -35,14 +35,16 @@ void ConsoleMenu::run()
             short nbCoups = 0;
 
             cout << endl << endl << "##############################Debut de la partie##############################" << endl << endl;
-            while (true) {
-
-                if (nbCoups == 8) {
+            while (true)
+            {
+                if (nbCoups == 8)
+                {
                     cout << "Le nombre maximum d'essais a atteint la limite (8). Je perds..." << endl << endl;
                     break;
                 }
                 int iNbElements = mastermind.getNbElements();
-                if (iNbElements == 0) { //Il ne reste plus de combinaison dans la liste, l'utilisateur a fait assurément une erreur car HAL ne se trompe pas!
+                if (iNbElements == 0)
+                {   //Il ne reste plus de combinaison dans la liste, l'utilisateur a fait assurément une erreur car HAL ne se trompe pas!
                     cout << "La liste de combinaisons possibles est epuisee." << endl << endl;;
                     break;
                 }
@@ -113,14 +115,16 @@ bool ConsoleMenu::saisirSequence(Couleur* tabCouleurs)
     cout << "    8-Blanc" << endl;
 
     string choix;
-    do {
+    do
+    {
         cout << "Entrer la suite de chiffres, 0 pour sortir: ";
         cin >> choix;
 
         if (choix == "0")
             return false;
 
-        if (choix.length() == 4) {
+        if (choix.length() == 4)
+        {
             tabCouleurs[0].setCouleur(atoi(choix.substr(0, 1).c_str()));
             tabCouleurs[1].setCouleur(atoi(choix.substr(1, 1).c_str()));
             tabCouleurs[2].setCouleur(atoi(choix.substr(2, 1).c_str()));
@@ -139,21 +143,16 @@ bool ConsoleMenu::saisirSequence(Couleur* tabCouleurs)
 
 bool ConsoleMenu::partieEstTerminee(short* tabVerdicts)
 {
-    if (tabVerdicts[0] == 1 && tabVerdicts[1] == 1 && tabVerdicts[2] == 1 && tabVerdicts[3] == 1)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return (tabVerdicts[0] == 1 && tabVerdicts[1] == 1 && tabVerdicts[2] == 1 && tabVerdicts[3] == 1);
 }
 
 void ConsoleMenu::saisirVerdicts(Combinaison* tabCouleursRef, short* tabVerdicts)
 {
     //Lecteur des 4 verdicts de l'usager
-    for (int i = 0; i < 4; i++) {
-        do {
+    for (int i = 0; i < 4; i++)
+    {
+        do
+        {
             string entree;
 
             Couleur c = tabCouleursRef->getCouleur(i);
@@ -170,11 +169,9 @@ void ConsoleMenu::saisirVerdicts(Combinaison* tabCouleursRef, short* tabVerdicts
 void ConsoleMenu::afficherResultat(short nbCoups)
 {   
     cout << endl << "J'ai trouve la reponse apres " << nbCoups;
-    if (nbCoups == 1) {
+    if (nbCoups == 1)
         cout << " essai. Merci d'avoir joue avec moi." << endl << endl;
-    }
-    else {
+    else
         cout << " essais. Merci d'avoir joue avec moi." << endl << endl;
-    }
     cout << "----HAL 9000----" << endl << endl;
 }

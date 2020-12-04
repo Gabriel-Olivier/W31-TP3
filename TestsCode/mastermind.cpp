@@ -105,7 +105,7 @@ namespace Tests_Mastermind
 			{
 				Combinaison* current = iterateur.getCourant()->getElement();
 
-				for (int i = 0;i < NB_COULEURS_PAR_COMBINAISON;i++)
+				for (int i = 0; i < NB_COULEURS_PAR_COMBINAISON; i++)
 				{
 					Assert::IsTrue(current->getCouleur(i) != C1.getCouleur());
 					Assert::IsTrue(current->getCouleur(i) != C2.getCouleur());
