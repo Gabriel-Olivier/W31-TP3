@@ -77,7 +77,10 @@ short Mastermind::nettoyerListe(Combinaison* _ref, short* _tabVerdicts)
 		else if (currentVerdict == 3)
 		{
 			for (int i = 0; i < NB_COULEURS_PAR_COMBINAISON; i++)
+			{
 				numberOfCombinaisonsRemoved += this->removeCombinaisonsWithColorAtPosition(i, currentColorId);
+			}
+		
 		}
 	}
 
@@ -127,12 +130,13 @@ short Mastermind::removeCombinaisonsWithColorAtPosition(short colorPos, short co
 {
 	Iterateur<Combinaison> currentCombinaison = this->liste->begin();
 	short numberOfCombinaisonsRemoved = 0;
-	for (int i = 0; i < this->liste->getNbElements(); i++)
+	while(currentCombinaison != this->liste->end())
 	{
 		Noeud<Combinaison>* currentNode = currentCombinaison.getCourant();
 		++currentCombinaison;
 		if (currentNode->getElement()->getCouleur(colorPos).getCouleur() == colorId)
 		{
+			std::cout << "DELETED : " << currentNode->getElement()->convertToNumeric() << std::endl;
 			this->liste->retirer(currentNode);
 			numberOfCombinaisonsRemoved++;
 		}

@@ -156,7 +156,7 @@ template<class T>
 bool ListeDouble<T>::retirer(Noeud<T>* _noeudCourant)
 {
 	bool isRemoved = false;
-	if (this->premierNoeud && _noeudCourant)
+	if (!this->isEmpty() && _noeudCourant != nullptr)
 	{
 		if (this->premierNoeud == _noeudCourant)
 			isRemoved = this->deleteFront();
